@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<el-form-item v-if="$check_register_field('add','employee_name','/ordinary_staff/view')" label="员工姓名" prop="employee_name">
-		<el-input id="employee_name" v-model="form['employee_name']" placeholder="请输入员工姓名"></el-input>
+		<el-form-item v-if="$check_register_field('add','employee_name','/ordinary_staff/view')" label="仓库所在地" prop="employee_name">
+		<el-input id="employee_name" v-model="form['employee_name']" placeholder="请输入仓库所在地"></el-input>
 		</el-form-item>
 		<el-form-item v-if="$check_register_field('add','employee_gender','/ordinary_staff/view')" label="员工性别" prop="employee_gender">
 		<el-select id="employee_gender" v-model="form['employee_gender']">
@@ -9,8 +9,8 @@
 			</el-option>
 		</el-select>
 		</el-form-item>
-		<el-form-item v-if="$check_register_field('add','employee_job_number','/ordinary_staff/view')" label="员工工号" prop="employee_job_number">
-		<el-input id="employee_job_number" v-model="form['employee_job_number']" placeholder="请输入员工工号"></el-input>
+		<el-form-item v-if="$check_register_field('add','employee_job_number','/ordinary_staff/view')" label="仓库经纬度" prop="employee_job_number">
+		<el-input id="employee_job_number" v-model="form['employee_job_number']" placeholder="请输入仓库经纬度"></el-input>
 		</el-form-item>
 
 	</div>
@@ -46,7 +46,7 @@
 				rules: {
 					"employee_name": [ ],
 					"employee_gender": [ ],
-					"employee_job_number": [ {required: true,message: '员工工号不能为空'}, ],
+					"employee_job_number": [ {required: true,message: '仓库经纬度不能为空'}, ],
 				}
 
 			}

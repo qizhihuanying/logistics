@@ -73,8 +73,8 @@
 				</el-form-item>
 			</el-col>
 			<el-col v-if="user_group === '管理员' || $check_field('get','employee_name') || $check_field('add','employee_name') || $check_field('set','employee_name')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="员工姓名" prop="employee_name">
-					<el-input id="employee_name" v-model="form_sub['employee_name']" placeholder="请输入员工姓名"
+				<el-form-item label="仓库所在地" prop="employee_name">
+					<el-input id="employee_name" v-model="form_sub['employee_name']" placeholder="请输入仓库所在地"
 							  v-if="user_group === '管理员' || (form_sub['ordinary_staff_id'] && $check_field('set','employee_name')) || (!form_sub['ordinary_staff_id'] && $check_field('add','employee_name'))"></el-input>
 					<div v-else-if="$check_field('get','employee_name')">{{form_sub['employee_name']}}</div>
 				</el-form-item>
@@ -90,8 +90,8 @@
 				</el-form-item>
 			</el-col>
 			<el-col v-if="user_group === '管理员' || $check_field('get','employee_job_number') || $check_field('add','employee_job_number') || $check_field('set','employee_job_number')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="员工工号" prop="employee_job_number">
-					<el-input id="employee_job_number" v-model="form_sub['employee_job_number']" placeholder="请输入员工工号"
+				<el-form-item label="仓库经纬度" prop="employee_job_number">
+					<el-input id="employee_job_number" v-model="form_sub['employee_job_number']" placeholder="请输入仓库经纬度"
 							  v-if="user_group === '管理员' || (form_sub['ordinary_staff_id'] && $check_field('set','employee_job_number')) || (!form_sub['ordinary_staff_id'] && $check_field('add','employee_job_number'))"></el-input>
 					<div v-else-if="$check_field('get','employee_job_number')">{{form_sub['employee_job_number']}}</div>
 				</el-form-item>
@@ -162,9 +162,9 @@
 				},
 
 				form_sub: {
-					"employee_name":'', // 员工姓名
+					"employee_name":'', // 仓库所在地
 					"employee_gender":'', // 员工性别
-					"employee_job_number":'', // 员工工号
+					"employee_job_number":'', // 仓库经纬度
 				    "user_id": 0,
 					"ordinary_staff_id": 0 // ID
 				},

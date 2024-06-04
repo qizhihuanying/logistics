@@ -3,7 +3,7 @@
 		<el-form label-position="right" :model="query" class="form p_4" label-width="120">
 			<el-row>
 				<el-col :xs="24" :sm="24" :lg="8" class="el_form_search_wrap">
-					<el-form-item label="员工姓名">
+					<el-form-item label="仓库所在地">
 						<el-input v-model="query.employee_name"></el-input>
 					</el-form-item>
 				</el-col>
@@ -22,19 +22,33 @@
 		<el-table :data="list" @selection-change="selectionChange" @sort-change="$sortChange" style="width: 100%" id="dataTable">
 			<el-table-column fixed type="selection" tooltip-effect="dark" width="55">
 			</el-table-column>
-			<el-table-column prop="driver_staff" label="司机员工"
+			<el-table-column prop="driver_staff" label="仓库类型"
 				v-if="user_group == '管理员' || $check_field('get','driver_staff')" min-width="200">
-				<template slot-scope="scope">
+				<!-- <template slot-scope="scope">
 					{{ get_user_driver_staff(scope.row['driver_staff']) }}
-				</template>
+				</template> -->
+				<template slot-scope="scope">
+        			{{ getWarehouseType(scope.row.driver_staff) }}
+    			</template>
 			</el-table-column>
-			<el-table-column prop="employee_name" label="员工姓名"
+
+			<!-- <el-col :xs="24" :sm="24" :lg="8" class="el_form_search_wrap">
+					<el-form-item label="车辆状态">
+						<el-select v-model="query.vehicle_status">
+                            <el-option v-for="o in list_vehicle_status" :key="o" :label="o"
+                            	:value="o">
+                            </el-option>
+						</el-select>
+					</el-form-item>
+				</el-col> -->
+
+			<el-table-column prop="employee_name" label="仓库所在地"
 				v-if="user_group == '管理员' || $check_field('get','employee_name')" min-width="200">
 			</el-table-column>
-			<el-table-column prop="employee_job_number" label="员工工号"
+			<el-table-column prop="employee_job_number" label="仓库经纬度"
 				v-if="user_group == '管理员' || $check_field('get','employee_job_number')" min-width="200">
 			</el-table-column>
-			<el-table-column prop="driver_kpi" label="司机kpi"
+			<el-table-column prop="driver_kpi" label="总物资量"
 				v-if="user_group == '管理员' || $check_field('get','driver_kpi')" min-width="200">
 			</el-table-column>
 
@@ -60,9 +74,9 @@
 						<span>详情</span>
 					</router-link>
 					<!--跨表按钮-->
-					<el-button class="el-button el-button--small is-plain el-button--default" style="margin: 5px !important;" size="small" @click="to_table(scope.row,'/kpi_assessment/view')" v-if="user_group == '管理员' || $check_action('/kpi_assessment/table','add') || $check_action('/kpi_assessment/view','add')">
+					<!-- <el-button class="el-button el-button--small is-plain el-button--default" style="margin: 5px !important;" size="small" @click="to_table(scope.row,'/kpi_assessment/view')" v-if="user_group == '管理员' || $check_action('/kpi_assessment/table','add') || $check_action('/kpi_assessment/view','add')">
 						<span>考核</span>
-					</el-button>
+					</el-button> -->
 				</template>
 			</el-table-column>
 
@@ -121,6 +135,7 @@
 				list: [],
 				// 用户列表
 				list_user_driver_staff: [],
+				list_warehouse_type: ['普通仓库','仓储中心','应急储备点'],
 			}
 		},
 		methods: {
@@ -287,7 +302,10 @@
 			},
 			deleteRow(index, rows) {
 				rows.splice(index, 1);
-			}
+			},
+			getWarehouseType(index) {
+            return this.list_warehouse_type[index] || '未知类型';
+        }
 
 		},
 		created() {

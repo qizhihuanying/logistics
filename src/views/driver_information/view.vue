@@ -2,7 +2,7 @@
 	<el-main class="bg edit_wrap">
 		<el-form ref="form" :model="form" status-icon label-width="120px" v-if="is_view()">
 			<el-col v-if="user_group === '管理员' || $check_field('get','driver_staff') || $check_field('add','driver_staff') || $check_field('set','driver_staff')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="司机员工" prop="driver_staff">
+				<!-- <el-form-item label="仓库类型" prop="driver_staff">
 						<el-select v-if="user_group === '管理员' || (form['driver_information_id'] && $check_field('set','driver_staff')) || (!form['driver_information_id'] && $check_field('add','driver_staff'))" id="driver_staff" v-model="form['driver_staff']" :disabled="disabledObj['driver_staff_isDisabled']">
 							<el-option v-for="o in list_user_driver_staff" :key="o['username']" :label="o['nickname'] + '-' + o['username']"
 									   :value="o['user_id']">
@@ -13,24 +13,33 @@
 									   :value="o['user_id']">
 							</el-option>
 						</el-select>
-				</el-form-item>
+				</el-form-item> -->
+				<el-form-item label="仓库类型">
+						<el-select v-model="form.driver_staff">
+                            <!-- <el-option v-for="o in list_warehouse_type" :key="o" :label="o"
+                            	:value="value">
+                            </el-option> -->
+							<el-option v-for="(o, index) in list_warehouse_type" :key="index" :label="o" :value="index">
+        					</el-option>
+						</el-select>
+					</el-form-item>
 			</el-col>
 			<el-col v-if="user_group === '管理员' || $check_field('get','employee_name') || $check_field('add','employee_name') || $check_field('set','employee_name')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="员工姓名" prop="employee_name">
-					<el-input id="employee_name" v-model="form['employee_name']" placeholder="请输入员工姓名"
+				<el-form-item label="仓库所在地" prop="employee_name">
+					<el-input id="employee_name" v-model="form['employee_name']" placeholder="请输入仓库所在地"
 							  v-if="user_group === '管理员' || (form['driver_information_id'] && $check_field('set','employee_name')) || (!form['driver_information_id'] && $check_field('add','employee_name'))" :disabled="disabledObj['employee_name_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','employee_name')">{{form['employee_name']}}</div>
 				</el-form-item>
 			</el-col>
 			<el-col v-if="user_group === '管理员' || $check_field('get','employee_job_number') || $check_field('add','employee_job_number') || $check_field('set','employee_job_number')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="员工工号" prop="employee_job_number">
-					<el-input id="employee_job_number" v-model="form['employee_job_number']" placeholder="请输入员工工号"
+				<el-form-item label="仓库经纬度" prop="employee_job_number">
+					<el-input id="employee_job_number" v-model="form['employee_job_number']" placeholder="请输入仓库经纬度"
 							  v-if="user_group === '管理员' || (form['driver_information_id'] && $check_field('set','employee_job_number')) || (!form['driver_information_id'] && $check_field('add','employee_job_number'))" :disabled="disabledObj['employee_job_number_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','employee_job_number')">{{form['employee_job_number']}}</div>
 				</el-form-item>
 			</el-col>
 			<el-col v-if="user_group === '管理员' || $check_field('get','driver_kpi') || $check_field('add','driver_kpi') || $check_field('set','driver_kpi')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="司机kpi" prop="driver_kpi">
+				<el-form-item label="总物资量" prop="driver_kpi">
 					<el-input-number id="driver_kpi" v-model.number="form['driver_kpi']"
 						v-if="user_group === '管理员' || (form['driver_information_id'] && $check_field('set','driver_kpi')) || (!form['driver_information_id'] && $check_field('add','driver_kpi'))" :disabled="disabledObj['driver_kpi_isDisabled']"></el-input-number>
 					<div v-else-if="$check_field('get','driver_kpi')">{{form['driver_kpi']}}</div>
@@ -65,10 +74,10 @@
 				},
 
 				form: {
-					"driver_staff": 0, // 司机员工
-					"employee_name":'', // 员工姓名
-					"employee_job_number":'', // 员工工号
-					"driver_kpi":0, // 司机kpi
+					"driver_staff": 0, // 仓库类型
+					"employee_name":'', // 仓库所在地
+					"employee_job_number":'', // 仓库经纬度
+					"driver_kpi":0, // 总物资量
 					"driver_information_id": 0, // ID
 
 				},
@@ -80,6 +89,7 @@
 				},
 				// 用户列表
 				list_user_driver_staff: [],
+				list_warehouse_type: ['普通仓库','仓储中心','应急储备点'],
 			}
 		},
 		methods: {

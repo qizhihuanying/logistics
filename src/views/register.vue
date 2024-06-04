@@ -198,12 +198,12 @@
 					if(user_group === "普通员工"){
 						var form_sub = Object.assign({} ,this.form_sub);
 						if(!ret && !form_sub["employee_job_number"]){
-							ret = "员工工号不能为空!";
+							ret = "仓库经纬度不能为空!";
 						}
 						else if(!ret){
 							res = await this.$get("~/api/ordinary_staff/count?", {"employee_job_number": form_sub["employee_job_number"]});
 							if(res.result){
-								ret = "员工工号已存在!";
+								ret = "仓库经纬度已存在!";
 							}
 						}
 					}

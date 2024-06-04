@@ -3,7 +3,7 @@
 		<el-form label-position="right" :model="query" class="form p_4" label-width="120">
 			<el-row>
 				<el-col :xs="24" :sm="24" :lg="8" class="el_form_search_wrap">
-					<el-form-item label="货物名称">
+					<el-form-item label="制造商">
 						<el-input v-model="query.name_of_goods"></el-input>
 					</el-form-item>
 				</el-col>
@@ -36,54 +36,57 @@
 		<el-table :data="list" @selection-change="selectionChange" @sort-change="$sortChange" style="width: 100%" id="dataTable">
 			<el-table-column fixed type="selection" tooltip-effect="dark" width="55">
 			</el-table-column>
-			<el-table-column prop="name_of_goods" label="货物名称"
+			<el-table-column prop="receipt_invoice" label="仓库类型"
+				v-if="user_group == '管理员' || $check_field('get','receipt_invoice')" min-width="200">
+				<!-- <template slot-scope="scope">
+					<a :href="$fullUrl(scope.row['receipt_invoice'])" target="_blank" style="color: rgb(64, 158, 255);">点击下载</a>
+				</template> -->
+			</el-table-column>
+			<el-table-column prop="freight_vehicle" label="仓库所在地"
+				v-if="user_group == '管理员' || $check_field('get','freight_vehicle')" min-width="200">
+			</el-table-column>
+			<el-table-column prop="freight_driver" label="仓库经纬度"
+				v-if="user_group == '管理员' || $check_field('get','freight_driver')" min-width="200">
+			</el-table-column>
+			<!-- <el-table-column prop="name_of_goods" label="制造商"
 				v-if="user_group == '管理员' || $check_field('get','name_of_goods')" min-width="200">
-			</el-table-column>
-			<el-table-column prop="goods_no" label="货物编号"
+			</el-table-column> -->
+			<!-- <el-table-column prop="goods_no" label="货物来源"
 				v-if="user_group == '管理员' || $check_field('get','goods_no')" min-width="200">
-			</el-table-column>
-			<el-table-column prop="warehousing_date" label="入库日期"
+			</el-table-column> -->
+			<!-- <el-table-column prop="warehousing_date" label="入库日期"
 				v-if="user_group == '管理员' || $check_field('get','warehousing_date')" min-width="200">
                 <template slot-scope="scope">
                 	{{ $toTime(scope.row["warehousing_date"],"yyyy-MM-dd") }}
                 </template>
-			</el-table-column>
-			<el-table-column prop="receipt_quantity" label="入库数量"
+			</el-table-column> -->
+			<el-table-column prop="receipt_quantity" label="总物资量"
 				v-if="user_group == '管理员' || $check_field('get','receipt_quantity')" min-width="200">
 			</el-table-column>
-			<el-table-column prop="volume_of_goods_in_storage" label="入库货物体积"
+			<!-- <el-table-column prop="volume_of_goods_in_storage" label="入库货物体积"
 				v-if="user_group == '管理员' || $check_field('get','volume_of_goods_in_storage')" min-width="200">
-			</el-table-column>
-			<el-table-column prop="weight_of_goods_in_storage" label="入库货物重量"
+			</el-table-column> -->
+			<!-- <el-table-column prop="weight_of_goods_in_storage" label="入库货物重量"
 				v-if="user_group == '管理员' || $check_field('get','weight_of_goods_in_storage')" min-width="200">
-			</el-table-column>
-			<el-table-column prop="receipt_invoice" label="入库发票"
-				v-if="user_group == '管理员' || $check_field('get','receipt_invoice')" min-width="200">
-				<template slot-scope="scope">
-					<a :href="$fullUrl(scope.row['receipt_invoice'])" target="_blank" style="color: rgb(64, 158, 255);">点击下载</a>
-				</template>
-			</el-table-column>
-			<el-table-column prop="freight_vehicle" label="货运车辆"
-				v-if="user_group == '管理员' || $check_field('get','freight_vehicle')" min-width="200">
-			</el-table-column>
-			<el-table-column prop="freight_driver" label="货运司机"
-				v-if="user_group == '管理员' || $check_field('get','freight_driver')" min-width="200">
-			</el-table-column>
-			<el-table-column prop="estimated_time" label="预计时间"
+			</el-table-column> -->
+			
+			
+			
+			<!-- <el-table-column prop="estimated_time" label="预计时间"
 				v-if="user_group == '管理员' || $check_field('get','estimated_time')" min-width="200">
 				<template slot-scope="scope">
 					{{ $toTime(scope.row["estimated_time"],"yyyy-MM-dd hh:mm:ss") }}
 				</template>
-			</el-table-column>
-			<el-table-column prop="actual_time" label="实际时间"
+			</el-table-column> -->
+			<!-- <el-table-column prop="actual_time" label="实际时间"
 				v-if="user_group == '管理员' || $check_field('get','actual_time')" min-width="200">
 				<template slot-scope="scope">
 					{{ $toTime(scope.row["actual_time"],"yyyy-MM-dd hh:mm:ss") }}
 				</template>
-			</el-table-column>
-			<el-table-column prop="expense_settlement" label="费用结算"
+			</el-table-column> -->
+			<!-- <el-table-column prop="expense_settlement" label="费用结算"
 				v-if="user_group == '管理员' || $check_field('get','expense_settlement')" min-width="200">
-			</el-table-column>
+			</el-table-column> -->
 
             <el-table-column sortable prop="create_time" label="创建时间" min-width="200">
                 <template slot-scope="scope">

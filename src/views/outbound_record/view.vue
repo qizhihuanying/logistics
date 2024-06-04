@@ -2,33 +2,33 @@
 	<el-main class="bg edit_wrap">
 		<el-form ref="form" :model="form" status-icon label-width="120px" v-if="is_view()">
 			<el-col v-if="user_group === '管理员' || $check_field('get','name_of_goods') || $check_field('add','name_of_goods') || $check_field('set','name_of_goods')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="货物名称" prop="name_of_goods">
-					<el-input id="name_of_goods" v-model="form['name_of_goods']" placeholder="请输入货物名称"
+				<el-form-item label="制造商" prop="name_of_goods">
+					<el-input id="name_of_goods" v-model="form['name_of_goods']" placeholder="请输入制造商"
 							  v-if="user_group === '管理员' || (form['outbound_record_id'] && $check_field('set','name_of_goods')) || (!form['outbound_record_id'] && $check_field('add','name_of_goods'))" :disabled="disabledObj['name_of_goods_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','name_of_goods')">{{form['name_of_goods']}}</div>
 				</el-form-item>
 			</el-col>
 			<el-col v-if="user_group === '管理员' || $check_field('get','goods_no') || $check_field('add','goods_no') || $check_field('set','goods_no')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="货物编号" prop="goods_no">
-					<el-input id="goods_no" v-model="form['goods_no']" placeholder="请输入货物编号"
+				<el-form-item label="货物来源" prop="goods_no">
+					<el-input id="goods_no" v-model="form['goods_no']" placeholder="请输入货物来源"
 							  v-if="user_group === '管理员' || (form['outbound_record_id'] && $check_field('set','goods_no')) || (!form['outbound_record_id'] && $check_field('add','goods_no'))" :disabled="disabledObj['goods_no_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','goods_no')">{{form['goods_no']}}</div>
 				</el-form-item>
 			</el-col>
-			<el-col v-if="user_group === '管理员' || $check_field('get','cargo_volume') || $check_field('add','cargo_volume') || $check_field('set','cargo_volume')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
+			<!-- <el-col v-if="user_group === '管理员' || $check_field('get','cargo_volume') || $check_field('add','cargo_volume') || $check_field('set','cargo_volume')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
 				<el-form-item label="货物体积" prop="cargo_volume">
 					<el-input id="cargo_volume" v-model="form['cargo_volume']" placeholder="请输入货物体积"
 							  v-if="user_group === '管理员' || (form['outbound_record_id'] && $check_field('set','cargo_volume')) || (!form['outbound_record_id'] && $check_field('add','cargo_volume'))" :disabled="disabledObj['cargo_volume_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','cargo_volume')">{{form['cargo_volume']}}</div>
 				</el-form-item>
-			</el-col>
-			<el-col v-if="user_group === '管理员' || $check_field('get','cargo_weight') || $check_field('add','cargo_weight') || $check_field('set','cargo_weight')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
+			</el-col> -->
+			<!-- <el-col v-if="user_group === '管理员' || $check_field('get','cargo_weight') || $check_field('add','cargo_weight') || $check_field('set','cargo_weight')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
 				<el-form-item label="货物重量" prop="cargo_weight">
 					<el-input id="cargo_weight" v-model="form['cargo_weight']" placeholder="请输入货物重量"
 							  v-if="user_group === '管理员' || (form['outbound_record_id'] && $check_field('set','cargo_weight')) || (!form['outbound_record_id'] && $check_field('add','cargo_weight'))" :disabled="disabledObj['cargo_weight_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','cargo_weight')">{{form['cargo_weight']}}</div>
 				</el-form-item>
-			</el-col>
+			</el-col> -->
 			<el-col v-if="user_group === '管理员' || $check_field('get','delivery_date') || $check_field('add','delivery_date') || $check_field('set','delivery_date')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
 				<el-form-item label="出库日期" prop="delivery_date">
 					<el-date-picker :disabled="disabledObj['delivery_date_isDisabled']" v-if="user_group === '管理员' || (form['outbound_record_id'] && $check_field('set','delivery_date')) || (!form['outbound_record_id'] && $check_field('add','delivery_date'))" id="delivery_date"
@@ -139,8 +139,8 @@
 				},
 
 				form: {
-					"name_of_goods":'', // 货物名称
-					"goods_no":'', // 货物编号
+					"name_of_goods":'', // 制造商
+					"goods_no":'', // 货物来源
 					"cargo_volume":'', // 货物体积
 					"cargo_weight":'', // 货物重量
 					"delivery_date":'', // 出库日期

@@ -31,16 +31,16 @@
 		<el-table :data="list" @selection-change="selectionChange" @sort-change="$sortChange" style="width: 100%" id="dataTable">
 			<el-table-column fixed type="selection" tooltip-effect="dark" width="55">
 			</el-table-column>
-			<el-table-column prop="driver_staff" label="司机员工"
+			<el-table-column prop="driver_staff" label="仓库类型"
 				v-if="user_group == '管理员' || $check_field('get','driver_staff')" min-width="200">
 				<template slot-scope="scope">
 					{{ get_user_driver_staff(scope.row['driver_staff']) }}
 				</template>
 			</el-table-column>
-			<el-table-column prop="employee_name" label="员工姓名"
+			<el-table-column prop="employee_name" label="仓库所在地"
 				v-if="user_group == '管理员' || $check_field('get','employee_name')" min-width="200">
 			</el-table-column>
-			<el-table-column prop="employee_job_number" label="员工工号"
+			<el-table-column prop="employee_job_number" label="仓库经纬度"
 				v-if="user_group == '管理员' || $check_field('get','employee_job_number')" min-width="200">
 			</el-table-column>
 			<el-table-column prop="assessment_date" label="考核日期"

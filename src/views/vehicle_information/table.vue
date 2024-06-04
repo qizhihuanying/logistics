@@ -3,12 +3,12 @@
 		<el-form label-position="right" :model="query" class="form p_4" label-width="120">
 			<el-row>
 				<el-col :xs="24" :sm="24" :lg="8" class="el_form_search_wrap">
-					<el-form-item label="车辆名称">
+					<el-form-item label="车辆编号">
 						<el-input v-model="query.vehicle_name"></el-input>
 					</el-form-item>
 				</el-col>
 				<el-col :xs="24" :sm="24" :lg="8" class="el_form_search_wrap">
-					<el-form-item label="车牌号码">
+					<el-form-item label="车牌号">
 						<el-input v-model="query.license_plate"></el-input>
 					</el-form-item>
 				</el-col>
@@ -21,6 +21,7 @@
 						</el-select>
 					</el-form-item>
 				</el-col>
+				
 				<el-col :xs="24" :sm="10" :lg="8" class="search_btn_wrap_1">
 					<el-form-item>
 						<el-button type="primary" @click="search()" class="search_btn_find">查询</el-button>
@@ -36,13 +37,13 @@
 		<el-table :data="list" @selection-change="selectionChange" @sort-change="$sortChange" style="width: 100%" id="dataTable">
 			<el-table-column fixed type="selection" tooltip-effect="dark" width="55">
 			</el-table-column>
-			<el-table-column prop="vehicle_name" label="车辆名称"
+			<el-table-column prop="vehicle_name" label="车辆编号"
 				v-if="user_group == '管理员' || $check_field('get','vehicle_name')" min-width="200">
 			</el-table-column>
-			<el-table-column prop="license_plate" label="车牌号码"
+			<el-table-column prop="license_plate" label="车牌号"
 				v-if="user_group == '管理员' || $check_field('get','license_plate')" min-width="200">
 			</el-table-column>
-			<el-table-column prop="location" label="所在位置"
+			<el-table-column prop="location" label="所在仓库"
 				v-if="user_group == '管理员' || $check_field('get','location')" min-width="200">
 			</el-table-column>
 			<el-table-column prop="vehicle_status" label="车辆状态"
@@ -133,6 +134,8 @@
 				list: [],
 				// 车辆状态列表
 				list_vehicle_status: ['运输中','空闲中','保养中'],
+				// 仓库类型列表
+				list_warehouse_type: ['普通仓库','仓储中心','应急储备点'],
 			}
 		},
 		methods: {

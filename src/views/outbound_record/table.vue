@@ -3,7 +3,7 @@
 		<el-form label-position="right" :model="query" class="form p_4" label-width="120">
 			<el-row>
 				<el-col :xs="24" :sm="24" :lg="8" class="el_form_search_wrap">
-					<el-form-item label="货物名称">
+					<el-form-item label="制造商">
 						<el-input v-model="query.name_of_goods"></el-input>
 					</el-form-item>
 				</el-col>
@@ -36,18 +36,18 @@
 		<el-table :data="list" @selection-change="selectionChange" @sort-change="$sortChange" style="width: 100%" id="dataTable">
 			<el-table-column fixed type="selection" tooltip-effect="dark" width="55">
 			</el-table-column>
-			<el-table-column prop="name_of_goods" label="货物名称"
+			<el-table-column prop="name_of_goods" label="制造商"
 				v-if="user_group == '管理员' || $check_field('get','name_of_goods')" min-width="200">
 			</el-table-column>
-			<el-table-column prop="goods_no" label="货物编号"
+			<el-table-column prop="goods_no" label="货物来源"
 				v-if="user_group == '管理员' || $check_field('get','goods_no')" min-width="200">
 			</el-table-column>
-			<el-table-column prop="cargo_volume" label="货物体积"
+			<!-- <el-table-column prop="cargo_volume" label="货物体积"
 				v-if="user_group == '管理员' || $check_field('get','cargo_volume')" min-width="200">
-			</el-table-column>
-			<el-table-column prop="cargo_weight" label="货物重量"
+			</el-table-column> -->
+			<!-- <el-table-column prop="cargo_weight" label="货物重量"
 				v-if="user_group == '管理员' || $check_field('get','cargo_weight')" min-width="200">
-			</el-table-column>
+			</el-table-column> -->
 			<el-table-column prop="delivery_date" label="出库日期"
 				v-if="user_group == '管理员' || $check_field('get','delivery_date')" min-width="200">
                 <template slot-scope="scope">

@@ -21,13 +21,13 @@
 
 
 			</el-table-column>
-			<el-table-column prop="employee_name" label="员工姓名"
+			<el-table-column prop="employee_name" label="仓库所在地"
 				v-if="user_group == '管理员' || $check_field('get','employee_name')" min-width="200">
 			</el-table-column>
 			<el-table-column prop="employee_gender" label="员工性别"
 				v-if="user_group == '管理员' || $check_field('get','employee_gender')" min-width="200">
 			</el-table-column>
-			<el-table-column prop="employee_job_number" label="员工工号"
+			<el-table-column prop="employee_job_number" label="仓库经纬度"
 				v-if="user_group == '管理员' || $check_field('get','employee_job_number')" min-width="200">
 			</el-table-column>
 

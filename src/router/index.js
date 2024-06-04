@@ -149,27 +149,27 @@ const routes = [
 		component: () => import('../views/outbound_record/view.vue')
 	},
 	// kpi规则路由
-	{
-		path: '/kpi_rule/table',
-		name: 'kpi_rule_table',
-		component: () => import('../views/kpi_rule/table.vue')
-	},
-	{
-		path: '/kpi_rule/view',
-		name: 'kpi_rule_view',
-		component: () => import('../views/kpi_rule/view.vue')
-	},
+	// {
+	// 	path: '/kpi_rule/table',
+	// 	name: 'kpi_rule_table',
+	// 	component: () => import('../views/kpi_rule/table.vue')
+	// },
+	// {
+	// 	path: '/kpi_rule/view',
+	// 	name: 'kpi_rule_view',
+	// 	component: () => import('../views/kpi_rule/view.vue')
+	// },
 	// kpi考核路由
-	{
-		path: '/kpi_assessment/table',
-		name: 'kpi_assessment_table',
-		component: () => import('../views/kpi_assessment/table.vue')
-	},
-	{
-		path: '/kpi_assessment/view',
-		name: 'kpi_assessment_view',
-		component: () => import('../views/kpi_assessment/view.vue')
-	},
+	// {
+	// 	path: '/kpi_assessment/table',
+	// 	name: 'kpi_assessment_table',
+	// 	component: () => import('../views/kpi_assessment/table.vue')
+	// },
+	// {
+	// 	path: '/kpi_assessment/view',
+	// 	name: 'kpi_assessment_view',
+	// 	component: () => import('../views/kpi_assessment/view.vue')
+	// },
 
 	// 用户路由
 	{

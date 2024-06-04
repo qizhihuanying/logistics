@@ -2,22 +2,22 @@
 	<el-main class="bg edit_wrap">
 		<el-form ref="form" :model="form" status-icon label-width="120px" v-if="is_view()">
 			<el-col v-if="user_group === '管理员' || $check_field('get','vehicle_name') || $check_field('add','vehicle_name') || $check_field('set','vehicle_name')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="车辆名称" prop="vehicle_name">
-					<el-input id="vehicle_name" v-model="form['vehicle_name']" placeholder="请输入车辆名称"
+				<el-form-item label="车辆编号" prop="vehicle_name">
+					<el-input id="vehicle_name" v-model="form['vehicle_name']" placeholder="请输入车辆编号"
 							  v-if="user_group === '管理员' || (form['vehicle_information_id'] && $check_field('set','vehicle_name')) || (!form['vehicle_information_id'] && $check_field('add','vehicle_name'))" :disabled="disabledObj['vehicle_name_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','vehicle_name')">{{form['vehicle_name']}}</div>
 				</el-form-item>
 			</el-col>
 			<el-col v-if="user_group === '管理员' || $check_field('get','license_plate') || $check_field('add','license_plate') || $check_field('set','license_plate')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="车牌号码" prop="license_plate">
-					<el-input id="license_plate" v-model="form['license_plate']" placeholder="请输入车牌号码"
+				<el-form-item label="车牌号" prop="license_plate">
+					<el-input id="license_plate" v-model="form['license_plate']" placeholder="请输入车牌号"
 							  v-if="user_group === '管理员' || (form['vehicle_information_id'] && $check_field('set','license_plate')) || (!form['vehicle_information_id'] && $check_field('add','license_plate'))" :disabled="disabledObj['license_plate_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','license_plate')">{{form['license_plate']}}</div>
 				</el-form-item>
 			</el-col>
 			<el-col v-if="user_group === '管理员' || $check_field('get','location') || $check_field('add','location') || $check_field('set','location')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="所在位置" prop="location">
-					<el-input id="location" v-model="form['location']" placeholder="请输入所在位置"
+				<el-form-item label="所在仓库" prop="location">
+					<el-input id="location" v-model="form['location']" placeholder="请输入所在仓库"
 							  v-if="user_group === '管理员' || (form['vehicle_information_id'] && $check_field('set','location')) || (!form['vehicle_information_id'] && $check_field('add','location'))" :disabled="disabledObj['location_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','location')">{{form['location']}}</div>
 				</el-form-item>
@@ -68,9 +68,9 @@
 				},
 
 				form: {
-					"vehicle_name":'', // 车辆名称
-					"license_plate":'', // 车牌号码
-					"location":'', // 所在位置
+					"vehicle_name":'', // 车辆编号
+					"license_plate":'', // 车牌号
+					"location":'', // 所在仓库
 					"vehicle_status":'', // 车辆状态
 					"vehicle_remarks":'', // 车辆备注
 					"vehicle_information_id": 0, // ID
@@ -85,6 +85,8 @@
 				},
 				//车辆状态选项列表
 				list_vehicle_status: ['运输中','空闲中','保养中'],
+				// 仓库类型列表
+				list_warehouse_type: ['普通仓库','仓储中心','应急储备点'],
 			}
 		},
 		methods: {

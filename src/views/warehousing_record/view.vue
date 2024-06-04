@@ -1,51 +1,51 @@
 <template>
 	<el-main class="bg edit_wrap">
 		<el-form ref="form" :model="form" status-icon label-width="120px" v-if="is_view()">
-			<el-col v-if="user_group === '管理员' || $check_field('get','name_of_goods') || $check_field('add','name_of_goods') || $check_field('set','name_of_goods')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="货物名称" prop="name_of_goods">
-					<el-input id="name_of_goods" v-model="form['name_of_goods']" placeholder="请输入货物名称"
+			<!-- <el-col v-if="user_group === '制造商' || $check_field('get','name_of_goods') || $check_field('add','name_of_goods') || $check_field('set','name_of_goods')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
+				<el-form-item label="制造商" prop="name_of_goods">
+					<el-input id="name_of_goods" v-model="form['name_of_goods']" placeholder="请输入制造商"
 							  v-if="user_group === '管理员' || (form['warehousing_record_id'] && $check_field('set','name_of_goods')) || (!form['warehousing_record_id'] && $check_field('add','name_of_goods'))" :disabled="disabledObj['name_of_goods_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','name_of_goods')">{{form['name_of_goods']}}</div>
 				</el-form-item>
-			</el-col>
+			</el-col> -->
 			<el-col v-if="user_group === '管理员' || $check_field('get','goods_no') || $check_field('add','goods_no') || $check_field('set','goods_no')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="货物编号" prop="goods_no">
-					<el-input id="goods_no" v-model="form['goods_no']" placeholder="请输入货物编号"
+				<el-form-item label="货物来源" prop="goods_no">
+					<el-input id="goods_no" v-model="form['goods_no']" placeholder="请输入货物来源"
 							  v-if="user_group === '管理员' || (form['warehousing_record_id'] && $check_field('set','goods_no')) || (!form['warehousing_record_id'] && $check_field('add','goods_no'))" :disabled="disabledObj['goods_no_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','goods_no')">{{form['goods_no']}}</div>
 				</el-form-item>
 			</el-col>
-			<el-col v-if="user_group === '管理员' || $check_field('get','warehousing_date') || $check_field('add','warehousing_date') || $check_field('set','warehousing_date')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
+			<!-- <el-col v-if="user_group === '管理员' || $check_field('get','warehousing_date') || $check_field('add','warehousing_date') || $check_field('set','warehousing_date')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
 				<el-form-item label="入库日期" prop="warehousing_date">
 					<el-date-picker :disabled="disabledObj['warehousing_date_isDisabled']" v-if="user_group === '管理员' || (form['warehousing_record_id'] && $check_field('set','warehousing_date')) || (!form['warehousing_record_id'] && $check_field('add','warehousing_date'))" id="warehousing_date"
 						v-model="form['warehousing_date']" type="date" placeholder="选择日期">
 					</el-date-picker>
 					<div v-else-if="$check_field('get','warehousing_date')">{{form['warehousing_date']}}</div>
 				</el-form-item>
-			</el-col>
+			</el-col> -->
 			<el-col v-if="user_group === '管理员' || $check_field('get','receipt_quantity') || $check_field('add','receipt_quantity') || $check_field('set','receipt_quantity')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="入库数量" prop="receipt_quantity">
+				<el-form-item label="总物资量" prop="receipt_quantity">
 					<el-input-number id="receipt_quantity" v-model.number="form['receipt_quantity']"
 						v-if="user_group === '管理员' || (form['warehousing_record_id'] && $check_field('set','receipt_quantity')) || (!form['warehousing_record_id'] && $check_field('add','receipt_quantity'))" :disabled="disabledObj['receipt_quantity_isDisabled']"></el-input-number>
 					<div v-else-if="$check_field('get','receipt_quantity')">{{form['receipt_quantity']}}</div>
 				</el-form-item>
 			</el-col>
-			<el-col v-if="user_group === '管理员' || $check_field('get','volume_of_goods_in_storage') || $check_field('add','volume_of_goods_in_storage') || $check_field('set','volume_of_goods_in_storage')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
+			<!-- <el-col v-if="user_group === '管理员' || $check_field('get','volume_of_goods_in_storage') || $check_field('add','volume_of_goods_in_storage') || $check_field('set','volume_of_goods_in_storage')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
 				<el-form-item label="入库货物体积" prop="volume_of_goods_in_storage">
 					<el-input id="volume_of_goods_in_storage" v-model="form['volume_of_goods_in_storage']" placeholder="请输入入库货物体积"
 							  v-if="user_group === '管理员' || (form['warehousing_record_id'] && $check_field('set','volume_of_goods_in_storage')) || (!form['warehousing_record_id'] && $check_field('add','volume_of_goods_in_storage'))" :disabled="disabledObj['volume_of_goods_in_storage_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','volume_of_goods_in_storage')">{{form['volume_of_goods_in_storage']}}</div>
 				</el-form-item>
-			</el-col>
-			<el-col v-if="user_group === '管理员' || $check_field('get','weight_of_goods_in_storage') || $check_field('add','weight_of_goods_in_storage') || $check_field('set','weight_of_goods_in_storage')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
+			</el-col> -->
+			<!-- <el-col v-if="user_group === '管理员' || $check_field('get','weight_of_goods_in_storage') || $check_field('add','weight_of_goods_in_storage') || $check_field('set','weight_of_goods_in_storage')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
 				<el-form-item label="入库货物重量" prop="weight_of_goods_in_storage">
 					<el-input id="weight_of_goods_in_storage" v-model="form['weight_of_goods_in_storage']" placeholder="请输入入库货物重量"
 							  v-if="user_group === '管理员' || (form['warehousing_record_id'] && $check_field('set','weight_of_goods_in_storage')) || (!form['warehousing_record_id'] && $check_field('add','weight_of_goods_in_storage'))" :disabled="disabledObj['weight_of_goods_in_storage_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','weight_of_goods_in_storage')">{{form['weight_of_goods_in_storage']}}</div>
 				</el-form-item>
-			</el-col>
+			</el-col> -->
 			<el-col v-if="user_group === '管理员' || $check_field('get','receipt_invoice') || $check_field('add','receipt_invoice') || $check_field('set','receipt_invoice')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="入库发票" prop="receipt_invoice">
+				<!-- <el-form-item label="仓库类型" prop="receipt_invoice">
 					<div v-if="disabledObj['receipt_invoice_isDisabled']">
 						<div v-if="$check_field('get','receipt_invoice')">
 							<el-button type="primary" @click="$download($fullUrl(form['receipt_invoice']),form['receipt_invoice'])">下载<i
@@ -63,10 +63,17 @@
 									class="el-icon-download el-icon--right"></i></el-button>
 						</div>
 					</div>
-				</el-form-item>
+				</el-form-item> -->
+				<el-form-item label="仓库类型" >
+						<el-select v-model="query.receipt_invoice">
+                            <el-option v-for="o in list_warehouse_type" :key="o" :label="o"
+                            	:value="o">
+                            </el-option>
+						</el-select>
+					</el-form-item>
 			</el-col>
 			<el-col v-if="user_group === '管理员' || $check_field('get','freight_vehicle') || $check_field('add','freight_vehicle') || $check_field('set','freight_vehicle')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="货运车辆" prop="freight_vehicle">
+				<el-form-item label="仓库所在地" prop="freight_vehicle">
 					<el-select id="freight_vehicle" v-model="form['freight_vehicle']"
 						v-if="user_group === '管理员' || (form['warehousing_record_id'] && $check_field('set','freight_vehicle')) || (!form['warehousing_record_id'] && $check_field('add','freight_vehicle'))">
 						<el-option v-for="o in list_freight_vehicle" :key="o['vehicle_name']" :label="o['vehicle_name']"
@@ -77,7 +84,7 @@
 				</el-form-item>
 			</el-col>
 			<el-col v-if="user_group === '管理员' || $check_field('get','freight_driver') || $check_field('add','freight_driver') || $check_field('set','freight_driver')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="货运司机" prop="freight_driver">
+				<el-form-item label="仓库经纬度" prop="freight_driver">
 					<el-select id="freight_driver" v-model="form['freight_driver']"
 						v-if="user_group === '管理员' || (form['warehousing_record_id'] && $check_field('set','freight_driver')) || (!form['warehousing_record_id'] && $check_field('add','freight_driver'))">
 						<el-option v-for="o in list_freight_driver" :key="o['employee_name']" :label="o['employee_name']"
@@ -87,29 +94,29 @@
 					<div v-else-if="$check_field('get','freight_driver')">{{form['freight_driver']}}</div>
 				</el-form-item>
 			</el-col>
-			<el-col v-if="user_group === '管理员' || $check_field('get','estimated_time') || $check_field('add','estimated_time') || $check_field('set','estimated_time')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
+			<!-- <el-col v-if="user_group === '管理员' || $check_field('get','estimated_time') || $check_field('add','estimated_time') || $check_field('set','estimated_time')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
 				<el-form-item label="预计时间" prop="estimated_time">
 					<el-date-picker :disabled="disabledObj['estimated_time_isDisabled']" v-if="user_group === '管理员' || (form['warehousing_record_id'] && $check_field('set','estimated_time')) || (!form['warehousing_record_id'] && $check_field('add','estimated_time'))" id="estimated_time"
 						v-model="form['estimated_time']" type="datetime" placeholder="选择日期时间">
 					</el-date-picker>
 					<div v-else-if="$check_field('get','estimated_time')">{{form['estimated_time']}}</div>
 				</el-form-item>
-			</el-col>
-			<el-col v-if="user_group === '管理员' || $check_field('get','actual_time') || $check_field('add','actual_time') || $check_field('set','actual_time')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
+			</el-col> -->
+			<!-- <el-col v-if="user_group === '管理员' || $check_field('get','actual_time') || $check_field('add','actual_time') || $check_field('set','actual_time')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
 				<el-form-item label="实际时间" prop="actual_time">
 					<el-date-picker :disabled="disabledObj['actual_time_isDisabled']" v-if="user_group === '管理员' || (form['warehousing_record_id'] && $check_field('set','actual_time')) || (!form['warehousing_record_id'] && $check_field('add','actual_time'))" id="actual_time"
 						v-model="form['actual_time']" type="datetime" placeholder="选择日期时间">
 					</el-date-picker>
 					<div v-else-if="$check_field('get','actual_time')">{{form['actual_time']}}</div>
 				</el-form-item>
-			</el-col>
-			<el-col v-if="user_group === '管理员' || $check_field('get','expense_settlement') || $check_field('add','expense_settlement') || $check_field('set','expense_settlement')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
+			</el-col> -->
+			<!-- <el-col v-if="user_group === '管理员' || $check_field('get','expense_settlement') || $check_field('add','expense_settlement') || $check_field('set','expense_settlement')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
 				<el-form-item label="费用结算" prop="expense_settlement">
 					<el-input id="expense_settlement" v-model="form['expense_settlement']" placeholder="请输入费用结算"
 							  v-if="user_group === '管理员' || (form['warehousing_record_id'] && $check_field('set','expense_settlement')) || (!form['warehousing_record_id'] && $check_field('add','expense_settlement'))" :disabled="disabledObj['expense_settlement_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','expense_settlement')">{{form['expense_settlement']}}</div>
 				</el-form-item>
-			</el-col>
+			</el-col> -->
 			<el-col :xs="24" :sm="12" :lg="8" class="el_form_btn_warp">
 				<el-form-item>
 					<el-button type="primary" @click="submit()">提交</el-button>
@@ -139,16 +146,16 @@
 				},
 
 				form: {
-					"name_of_goods":'', // 货物名称
-					"goods_no":'', // 货物编号
+					"name_of_goods":'', // 制造商
+					"goods_no":'', // 货物来源
 					"warehousing_date":'', // 入库日期
-					"receipt_quantity":0, // 入库数量
+					"receipt_quantity":0, // 入库数量 总物资量
 					"volume_of_goods_in_storage":'', // 入库货物体积
 					"weight_of_goods_in_storage":'', // 入库货物重量
-					"receipt_invoice":'', // 入库发票
-					"freight_vehicle":'', // 货运车辆
-					"freight_driver":'', // 货运司机
-					"estimated_time":'', // 预计时间
+					"receipt_invoice":'', // 入库发票 仓库类型
+					"freight_vehicle":'', // 货运车辆 仓库所在地
+					"freight_driver":'', // 货运司机 仓库经纬度
+					"estimated_time":'', // 预计时间 
 					"actual_time":'', // 实际时间
 					"expense_settlement":'', // 费用结算
 					"warehousing_record_id": 0, // ID
@@ -172,6 +179,8 @@
 				list_freight_vehicle: [],
 				//货运司机选项列表
 				list_freight_driver: [],
+				//仓库类型选项列表
+				list_warehouse_type: ['普通仓库','仓储中心','应急储备点'],
 			}
 		},
 		methods: {

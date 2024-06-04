@@ -2,7 +2,7 @@
 	<el-main class="bg edit_wrap">
 		<el-form ref="form" :model="form" status-icon label-width="120px" v-if="is_view()">
 			<el-col v-if="user_group === '管理员' || $check_field('get','driver_staff') || $check_field('add','driver_staff') || $check_field('set','driver_staff')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="司机员工" prop="driver_staff">
+				<el-form-item label="仓库类型" prop="driver_staff">
 						<el-select v-if="user_group === '管理员' || (form['kpi_assessment_id'] && $check_field('set','driver_staff')) || (!form['kpi_assessment_id'] && $check_field('add','driver_staff'))" id="driver_staff" v-model="form['driver_staff']" :disabled="disabledObj['driver_staff_isDisabled']">
 							<el-option v-for="o in list_user_driver_staff" :key="o['username']" :label="o['nickname'] + '-' + o['username']"
 									   :value="o['user_id']">
@@ -16,15 +16,15 @@
 				</el-form-item>
 			</el-col>
 			<el-col v-if="user_group === '管理员' || $check_field('get','employee_name') || $check_field('add','employee_name') || $check_field('set','employee_name')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="员工姓名" prop="employee_name">
-					<el-input id="employee_name" v-model="form['employee_name']" placeholder="请输入员工姓名"
+				<el-form-item label="仓库所在地" prop="employee_name">
+					<el-input id="employee_name" v-model="form['employee_name']" placeholder="请输入仓库所在地"
 							  v-if="user_group === '管理员' || (form['kpi_assessment_id'] && $check_field('set','employee_name')) || (!form['kpi_assessment_id'] && $check_field('add','employee_name'))" :disabled="disabledObj['employee_name_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','employee_name')">{{form['employee_name']}}</div>
 				</el-form-item>
 			</el-col>
 			<el-col v-if="user_group === '管理员' || $check_field('get','employee_job_number') || $check_field('add','employee_job_number') || $check_field('set','employee_job_number')" :xs="24" :sm="12" :lg="8" class="el_form_item_warp">
-				<el-form-item label="员工工号" prop="employee_job_number">
-					<el-input id="employee_job_number" v-model="form['employee_job_number']" placeholder="请输入员工工号"
+				<el-form-item label="仓库经纬度" prop="employee_job_number">
+					<el-input id="employee_job_number" v-model="form['employee_job_number']" placeholder="请输入仓库经纬度"
 							  v-if="user_group === '管理员' || (form['kpi_assessment_id'] && $check_field('set','employee_job_number')) || (!form['kpi_assessment_id'] && $check_field('add','employee_job_number'))" :disabled="disabledObj['employee_job_number_isDisabled']"></el-input>
 					<div v-else-if="$check_field('get','employee_job_number')">{{form['employee_job_number']}}</div>
 				</el-form-item>
@@ -83,9 +83,9 @@
 				},
 
 				form: {
-					"driver_staff": 0, // 司机员工
-					"employee_name":'', // 员工姓名
-					"employee_job_number":'', // 员工工号
+					"driver_staff": 0, // 仓库类型
+					"employee_name":'', // 仓库所在地
+					"employee_job_number":'', // 仓库经纬度
 					"assessment_date":'', // 考核日期
 					"assessment_type":'', // 考核类型
 					"kpi_score":0, // kpi分数
