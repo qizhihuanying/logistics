@@ -1,140 +1,26 @@
 <template>
-	<el-main class="bg table_wrap">
-		<el-form label-position="right" :model="query" class="form p_4" label-width="120">
-			<el-row>
-				<el-col :xs="24" :sm="24" :lg="8" class="el_form_search_wrap">
-					<el-form-item label="制造商">
-						<el-input v-model="query.name_of_goods"></el-input>
-					</el-form-item>
-				</el-col>
-				<el-col :xs="24" :sm="24" :lg="8" class="el_form_search_wrap">
-					<el-form-item label="出库日期">
-						<el-input v-model="query.delivery_date"></el-input>
-					</el-form-item>
-				</el-col>
-				<el-col :xs="24" :sm="24" :lg="8" class="el_form_search_wrap">
-					<el-form-item label="货运司机">
-						<el-select v-model="query.freight_driver">
-							<el-option v-for="o in list_freight_driver" :key="o.employee_name" :label="o.employee_name"
-								:value="o.employee_name">
-							</el-option>
-						</el-select>
-					</el-form-item>
-				</el-col>
-				<el-col :xs="24" :sm="10" :lg="8" class="search_btn_wrap_1">
-					<el-form-item>
-						<el-button type="primary" @click="search()" class="search_btn_find">查询</el-button>
-						<el-button @click="reset()" style="margin-right: 74px;" class="search_btn_reset">重置</el-button>
-						<router-link v-if="user_group == '管理员' || $check_action('/outbound_record/table','add') || $check_action('/outbound_record/view','add')" class="el-button el-button--default el-button--primary search_btn_add" to="./view?">添加
-						</router-link>
-            <el-button v-if="user_group == '管理员' || $check_action('/outbound_record/table','del') || $check_action('/outbound_record/view','del')" class="search_btn_del" type="danger" @click="delInfo()">删除</el-button>
-					</el-form-item>
-				</el-col>
-
-			</el-row>
-		</el-form>
-		<el-table :data="list" @selection-change="selectionChange" @sort-change="$sortChange" style="width: 100%" id="dataTable">
-			<el-table-column fixed type="selection" tooltip-effect="dark" width="55">
-			</el-table-column>
-			<el-table-column prop="name_of_goods" label="制造商"
-				v-if="user_group == '管理员' || $check_field('get','name_of_goods')" min-width="200">
-			</el-table-column>
-			<el-table-column prop="goods_no" label="货物来源"
-				v-if="user_group == '管理员' || $check_field('get','goods_no')" min-width="200">
-			</el-table-column>
-			<!-- <el-table-column prop="cargo_volume" label="货物体积"
-				v-if="user_group == '管理员' || $check_field('get','cargo_volume')" min-width="200">
-			</el-table-column> -->
-			<!-- <el-table-column prop="cargo_weight" label="货物重量"
-				v-if="user_group == '管理员' || $check_field('get','cargo_weight')" min-width="200">
-			</el-table-column> -->
-			<el-table-column prop="delivery_date" label="出库日期"
-				v-if="user_group == '管理员' || $check_field('get','delivery_date')" min-width="200">
-                <template slot-scope="scope">
-                	{{ $toTime(scope.row["delivery_date"],"yyyy-MM-dd") }}
-                </template>
-			</el-table-column>
-			<el-table-column prop="outbound_quantity" label="出库数量"
-				v-if="user_group == '管理员' || $check_field('get','outbound_quantity')" min-width="200">
-			</el-table-column>
-			<el-table-column prop="delivery_invoice" label="出库发票"
-				v-if="user_group == '管理员' || $check_field('get','delivery_invoice')" min-width="200">
-				<template slot-scope="scope">
-					<a :href="$fullUrl(scope.row['delivery_invoice'])" target="_blank" style="color: rgb(64, 158, 255);">点击下载</a>
-				</template>
-			</el-table-column>
-			<el-table-column prop="freight_vehicle" label="货运车辆"
-				v-if="user_group == '管理员' || $check_field('get','freight_vehicle')" min-width="200">
-			</el-table-column>
-			<el-table-column prop="freight_driver" label="货运司机"
-				v-if="user_group == '管理员' || $check_field('get','freight_driver')" min-width="200">
-			</el-table-column>
-			<el-table-column prop="estimated_time" label="预计时间"
-				v-if="user_group == '管理员' || $check_field('get','estimated_time')" min-width="200">
-				<template slot-scope="scope">
-					{{ $toTime(scope.row["estimated_time"],"yyyy-MM-dd hh:mm:ss") }}
-				</template>
-			</el-table-column>
-			<el-table-column prop="actual_time" label="实际时间"
-				v-if="user_group == '管理员' || $check_field('get','actual_time')" min-width="200">
-				<template slot-scope="scope">
-					{{ $toTime(scope.row["actual_time"],"yyyy-MM-dd hh:mm:ss") }}
-				</template>
-			</el-table-column>
-			<el-table-column prop="expense_settlement" label="费用结算"
-				v-if="user_group == '管理员' || $check_field('get','expense_settlement')" min-width="200">
-			</el-table-column>
-
-            <el-table-column sortable prop="create_time" label="创建时间" min-width="200">
-                <template slot-scope="scope">
-                	{{ $toTime(scope.row["create_time"],"yyyy-MM-dd hh:mm:ss") }}
-                </template>
-            </el-table-column>
-
-			<el-table-column sortable prop="update_time" label="更新时间" min-width="200">
-                <template slot-scope="scope">
-                	{{ $toTime(scope.row["update_time"],"yyyy-MM-dd hh:mm:ss") }}
-                </template>
-			</el-table-column>
-			<el-table-column fixed="right" label="操作" min-width="120" v-if="user_group == '管理员' || $check_action('/outbound_record/table','set') || $check_action('/outbound_record/view','set') || $check_action('/outbound_record/view','get') || $check_action('//table','add') || $check_action('//view','add')" >
-
-
-				<template slot-scope="scope">
-					<router-link class="el-button el-button--small is-plain el-button--success" style="margin: 5px !important;"
-					v-if="user_group == '管理员' || $check_action('/outbound_record/table','set') || $check_action('/outbound_record/view','set') || $check_action('/outbound_record/view','get')"
-						:to="'./view?' + field + '=' + scope.row[field]"
-						 size="small">
-						<span>详情</span>
-					</router-link>
-				</template>
-			</el-table-column>
-
-		</el-table>
-
-		<!-- 分页器 -->
-		<div class="mt text_center">
-			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-				:current-page="query.page" :page-sizes="[7, 10, 30, 100]" :page-size="query.size"
-				layout="total, sizes, prev, pager, next, jumper" :total="count">
-			</el-pagination>
-		</div>
-		<!-- /分页器 -->
-
-		<div class="modal_wrap" v-if="showModal">
-			<div class="modal_box">
-				<!-- <div class="modal_box_close" @click="closeModal">X</div> -->
-				<p class="modal_box_title">重要提醒</p>
-				<p class="modal_box_text">当前有数据达到预警值！</p>
-				<div class="btn_box">
-					<span @click="closeModal">取消</span>
-					<span @click="closeModal">确定</span>
-				</div>
-			</div>
-		</div>
-
-
+	<el-main class="bg table_wrap" @click="showStartButton">
+	  <!-- 居中的大按钮 -->
+	  <button v-if="showButton" class="start-button" @click="startSimulation">
+		开始模拟
+	  </button>
+	  <!-- 加载动画 -->
+	  <div v-if="isLoading" class="loading-animation">
+		<div class="spinner"></div>
+		<div class="loading-text">模拟中...</div>
+	  </div>
+	  <!-- 视频 -->
+	  <video class="video-overlay" v-if="!isLoading" v-bind:src="videoSrc" autoplay>
+		Your browser does not support the video tag.
+	  </video>
+	  <video class="video-overlay-2" v-if="!isLoading" v-bind:src="videoSrc2" autoplay>
+		Your browser does not support the video tag.
+	  </video>
+	  <video class="video-overlay-3" v-if="!isLoading" v-bind:src="videoSrc3" autoplay>
+		Your browser does not support the video tag.
+	  </video>
 	</el-main>
-</template>
+  </template>
 <script>
 	import mixin from "@/mixins/page.js";
 
@@ -168,9 +54,26 @@
 				list_freight_vehicle: [],
 				// 货运司机列表
 				list_freight_driver: [],
+				videoSrc: require('../../assets/video/simulation.mp4'),
+				videoSrc2: require('../../assets/video/storage.mp4'),
+				videoSrc3: require('../../assets/video/orders.mp4'),
+				isLoading: true,
+				showButton: true,
 			}
 		},
 		methods: {
+			showStartButton() {
+				this.showButton = true;
+			},
+			  // 开始模拟的方法
+			startSimulation() {
+				this.isLoading = true; // 显示加载动画
+				this.showButton = false; // 隐藏按钮
+				setTimeout(() => {
+				this.isLoading = false; // 隐藏加载动画
+				// 这里可以添加其他初始化代码，比如获取视频数据等
+				}, 25000); // 三秒后隐藏加载动画
+			},
 			// 关闭弹框
 			closeModal(){
 				this.showModal = false;
@@ -340,7 +243,10 @@
 			setTimeout(() => {
 				this.open_tip();
 			}, 1000)
-		}
+		},
+		mounted() {
+			// 设置三秒后显示视频
+		},
 	}
 </script>
 
@@ -377,7 +283,7 @@
 		top: 0;
 		left: 0;
 		background: rgba(0,0,0,0.5);
-		z-index: 9999999999;
+		z-index: 99999999;
 	}
 	.modal_wrap .modal_box{
 		width: 400px;
@@ -436,4 +342,97 @@
 		border-color: #409EFF;
 		margin-left: 15px;
 	}
+	.video-overlay {
+		position: fixed; 
+		right: 0;
+		bottom: 0;
+		width: 1620px;
+		height: 1000px;
+		z-index: 90; 
+		background-size: cover;
+		transition: 1s opacity;
+	}
+	.video-overlay-2 {
+		position: fixed; 
+		right: 1300px;
+		bottom: 100px;
+		width: 480px;
+		height: 360px;
+		z-index: 100; 
+		background-size: cover;
+		transition: 1s opacity;
+	}
+	.video-overlay-3 {
+		position: fixed; 
+		right: 1300px;
+		bottom: 550px;
+		width: 480px;
+		height: 360px;
+		z-index: 100; 
+		background-size: cover;
+		transition: 1s opacity;
+	}
+	/* 加载动画容器样式 */
+	.loading-animation {
+	pointer-events: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 200px; /* 设置动画的宽度，可以根据需要调整 */
+	height: 200px; /* 设置动画的高度，可以根据需要调整 */
+	z-index: 101; /* 确保加载动画在视频之上 */
+	}
+
+	/* 点旋转动画样式 */
+	.spinner {
+	width: 100px; /* 根据需要调整大小 */
+	height: 100px; /* 根据需要调整大小 */
+	border: 15px solid rgba(255, 255, 255, 0.2); /* 边框颜色 */
+	border-top-color: #3498db; /* 上边框颜色，设置为加载动画的主要颜色 */
+	border-radius: 50%;
+	animation: spin 2s linear infinite;
+	z-index: 101;
+	}
+
+	/* 文字样式 */
+	.loading-text {
+	margin-top: 20px; /* 与旋转图标的距离 */
+	font-size: 48px; /* 字体大小 */
+	color: #3498db; /* 字体颜色，与图标颜色相匹配 */
+	z-index: 101;
+	}
+
+	/* 旋转动画 */
+	@keyframes spin {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	  /* 居中的大按钮样式 */
+	.start-button {
+	position: fixed;
+    display: block;
+    margin: 250px auto 0 600px; /* 调整上边距以覆盖更大的区域 */
+    padding: 20px 40px; /* 增加内边距 */
+    font-size: 32px; /* 增大字体大小 */
+    text-align: center; /* 文本居中 */
+    /* cursor: pointer; */
+    background-color: #3498db; /* 按钮背景颜色 */
+    color: white; /* 文字颜色 */
+    border: none; /* 无边框 */
+    border-radius: 10px; /* 按钮圆角 */
+    width: 400px; /* 按钮宽度，可以根据需要调整 */
+	height: 300px;
+    transition: background-color 0.3s; /* 背景颜色变化的过渡效果 */
+	z-index: 10000;
+  }
+
 </style>
